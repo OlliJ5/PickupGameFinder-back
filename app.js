@@ -6,6 +6,8 @@ const morgan = require('morgan')
 const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
 
+const usersRouter = require('./controllers/users')
+
 const app = express()
 
 console.log('connecting to', config.MONGODB_URI)
@@ -22,5 +24,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(middleware.tokenExtractor)
+
+app.use('/api/users', usersRouter)
 
 module.exports = app
