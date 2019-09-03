@@ -1,9 +1,12 @@
 const config = require('./utils/config')
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const morgan = require('morgan')
-const app = express()
+const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
+
+const app = express()
 
 console.log('connecting to', config.MONGODB_URI)
 
@@ -12,11 +15,12 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
     console.log('connected to MongoDB')
   })
   .catch((error) => {
-    console.log('error connection to MongoDB:', error.message)
+    console.log('Error while connecting to database:', error.message)
   })
 
-
+app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
+app.use(middleware.tokenExtractor)
 
 module.exports = app
