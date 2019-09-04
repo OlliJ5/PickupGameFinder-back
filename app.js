@@ -7,6 +7,7 @@ const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
 
 const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 
 const app = express()
 
@@ -26,5 +27,6 @@ app.use(morgan('tiny'))
 app.use(middleware.tokenExtractor)
 
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 module.exports = app
