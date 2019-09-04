@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const activeGamesRouter = require('./controllers/activeGames')
 
 const app = express()
 
@@ -28,5 +29,6 @@ app.use(middleware.tokenExtractor)
 
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/activeGames', activeGamesRouter)
 
 module.exports = app
