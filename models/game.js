@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const activeGameSchema = mongoose.Schema({
+const gameSchema = mongoose.Schema({
   startTime: {
     type: Date,
     default: Date.now
@@ -24,7 +24,7 @@ const activeGameSchema = mongoose.Schema({
   maxParticipants: Number
 })
 
-activeGameSchema.set('toJSON', {
+gameSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -32,6 +32,6 @@ activeGameSchema.set('toJSON', {
   }
 })
 
-const ActiveGame = mongoose.model('ActiveGame', activeGameSchema)
+const Game = mongoose.model('Game', gameSchema)
 
-module.exports = ActiveGame
+module.exports = Game
