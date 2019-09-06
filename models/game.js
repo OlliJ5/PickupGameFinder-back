@@ -1,10 +1,8 @@
 const mongoose = require('mongoose')
 
 const gameSchema = mongoose.Schema({
-  startTime: {
-    type: Date,
-    default: Date.now
-  },
+  startTime: Date,
+  endTime: Date,
   durationMins: Number,
   owner: {
     type: mongoose.Schema.Types.ObjectId,
