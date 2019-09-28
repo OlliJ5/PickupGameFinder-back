@@ -47,4 +47,13 @@ gamesRouter.post('/', async (request, response, next) => {
   }
 })
 
+gamesRouter.get('/active', async (request, response) => {
+  const activeGames = await Game.find({
+    endTime: {
+      $gte: Date.now()
+    }
+  })
+  response.json(activeGames)
+})
+
 module.exports = gamesRouter
