@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const gamesRouter = require('express').Router()
 const Game = require('../models/game')
 const User = require('../models/user')
+const Player = require('../models/player')
 
 gamesRouter.get('/', async (request, response) => {
   const games = await Game.find({})
@@ -34,13 +35,22 @@ gamesRouter.post('/', async (request, response, next) => {
       participants: [user._id],
       location: {
         lat: body.location.lat,
-        long: body.location.long
+        long: body.location.lng
       },
       desc: body.desc,
       maxParticipants: body.maxParticipants
     })
 
+
     const savedGame = await game.save()
+
+    const player = new Player({
+      user: user._id,
+      game: savedGame._id
+    })
+
+    await player.save()
+
     response.status(201).json(savedGame)
   } catch (exception) {
     next(exception)
