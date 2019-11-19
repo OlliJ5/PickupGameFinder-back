@@ -3,7 +3,12 @@ const mongoose = require('mongoose')
 const gameSchema = mongoose.Schema({
   startTime: Date,
   endTime: Date,
-  durationMins: Number,
+  durationMins: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 180
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -15,11 +20,31 @@ const gameSchema = mongoose.Schema({
     }
   ],
   location: {
-    lat: Number,
-    long: Number
+    lat: {
+      type: Number,
+      required: true,
+      min: -90,
+      max: 90
+    },
+    long: {
+      type: Number,
+      required: true,
+      min: -180,
+      max: 180
+    }
   },
-  desc: String,
-  maxParticipants: Number
+  desc: {
+    type: String,
+    required: true,
+    minlength: 10,
+    maxlength: 140
+  },
+  maxParticipants: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 30
+  }
 })
 
 gameSchema.set('toJSON', {

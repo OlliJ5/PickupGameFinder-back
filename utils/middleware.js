@@ -6,6 +6,18 @@ const tokenExtractor = (request, response, next) => {
   next()
 }
 
+const errorHandler = (error, request, response, next) => {
+  console.log('virheen käsittelijässä')
+  if(error.name === 'ValidationError') {
+    console.log('validoinnissa meni jokin päin persettä')
+    console.log('errori', error.message)
+    return response.status(400).json({ error: error.message })
+  }
+
+  next(error)
+}
+
 module.exports = {
-  tokenExtractor
+  tokenExtractor,
+  errorHandler
 }

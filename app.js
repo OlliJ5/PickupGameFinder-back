@@ -33,4 +33,6 @@ app.use('/api/login', loginRouter)
 app.use('/api/games', gamesRouter)
 app.use('/api/players', playersRouter)
 
+app.use(middleware.errorHandler)
+
 module.exports = app
