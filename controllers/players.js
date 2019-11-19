@@ -23,6 +23,11 @@ playersRouter.post('/', async (request, response, next) => {
     const user = await User.findById(decodedToken.id)
     const game = await Game.findById(body.game)
 
+    if(!game) {
+      console.log('paskan möivät')
+      response.status(400).send({ error: 'Game with this index does not exist' })
+    }
+
     const playerObject = new Player({
       user: user._id,
       game: game._id

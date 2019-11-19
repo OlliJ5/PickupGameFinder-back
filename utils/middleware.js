@@ -8,10 +8,12 @@ const tokenExtractor = (request, response, next) => {
 
 const errorHandler = (error, request, response, next) => {
   console.log('virheen käsittelijässä')
-  if(error.name === 'ValidationError') {
+  if (error.name === 'ValidationError') {
     console.log('validoinnissa meni jokin päin persettä')
     console.log('errori', error.message)
     return response.status(400).json({ error: error.message })
+  } else if (error.name === 'CastError' && error.kind === 'ObjectId') {
+    return response.status(400).send({ error: 'malformatted id' })
   }
 
   next(error)
