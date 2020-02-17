@@ -33,6 +33,12 @@ app.use('/api/login', loginRouter)
 app.use('/api/games', gamesRouter)
 app.use('/api/players', playersRouter)
 
+if (process.env.NODE_ENV === 'test') {
+  console.log('adding db reset option')
+  const testingRouter = require('./controllers/tests')
+  app.use('/api/testing', testingRouter)
+}
+
 app.use(middleware.errorHandler)
 
 module.exports = app
