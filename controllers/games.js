@@ -62,7 +62,10 @@ gamesRouter.get('/active', async (request, response) => {
     endTime: {
       $gte: Date.now()
     }
-  })
+  }).populate('owner', 'username')
+    .populate('participants', 'username')
+
+  console.log('pelit', activeGames)
   response.json(activeGames)
 })
 
