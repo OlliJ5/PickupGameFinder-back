@@ -5,7 +5,7 @@ const Game = require('../models/game')
 const User = require('../models/user')
 
 playersRouter.get('/', async (request, response) => {
-  const players = await Player.find({})
+  const players = await Player.find({}).populate('user', 'username')
   response.json(players)
 })
 
@@ -23,7 +23,7 @@ playersRouter.post('/', async (request, response, next) => {
     const user = await User.findById(decodedToken.id)
     const game = await Game.findById(body.game)
 
-    if(!game) {
+    if (!game) {
       console.log('paskan möivät')
       response.status(400).send({ error: 'Game with this index does not exist' })
     }
@@ -37,11 +37,11 @@ playersRouter.post('/', async (request, response, next) => {
       return response.status(400).json({ error: 'player is already in the game' })
     }
 
-    const savedPlayer = await playerObject.save()
+    await playerObject.save()
     game.participants = game.participants.concat(user._id)
     await game.save()
 
-    response.status(201).json(savedPlayer)
+    response.status(201).json({ user, game: game._id })
 
   } catch (exception) {
     next(exception)

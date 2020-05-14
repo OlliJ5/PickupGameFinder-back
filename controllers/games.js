@@ -51,7 +51,10 @@ gamesRouter.post('/', async (request, response, next) => {
 
     await player.save()
 
-    response.status(201).json(savedGame)
+    const populatedGame = await Game.findById(savedGame._id)
+      .populate('owner', 'username')
+      .populate('participants', 'username')
+    response.status(201).json(populatedGame)
   } catch (exception) {
     next(exception)
   }
@@ -65,7 +68,6 @@ gamesRouter.get('/active', async (request, response) => {
   }).populate('owner', 'username')
     .populate('participants', 'username')
 
-  console.log('pelit', activeGames)
   response.json(activeGames)
 })
 
