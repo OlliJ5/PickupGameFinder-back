@@ -15,7 +15,11 @@ const app = express()
 
 console.log('connecting to', config.MONGODB_URI)
 
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
+mongoose.connect(config.MONGODB_URI, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+})
   .then(() => {
     console.log('connected to MongoDB')
   })
