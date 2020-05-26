@@ -46,6 +46,7 @@ usersRouter.put('/:id', async (request, response, next) => {
     }
 
     const userToUpdate = await User.findById(id)
+
     if (!userToUpdate) {
       return response.status(400).json({ error: 'no user with this id' })
     }
