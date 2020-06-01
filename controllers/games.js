@@ -71,4 +71,19 @@ gamesRouter.get('/active', async (request, response) => {
   response.json(activeGames)
 })
 
+gamesRouter.get('/owner/:id', async (request, response, next) => {
+  const id = request.params.id
+  try {
+    const games = await Game.find({
+      owner: id
+    }).populate('owner', 'username')
+      .populate('participants', 'username')
+    console.log('pelit', games)
+    response.json(games)
+  } catch (exception) {
+    next(exception)
+  }
+
+})
+
 module.exports = gamesRouter
