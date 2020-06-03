@@ -78,7 +78,6 @@ gamesRouter.get('/owner/:id', async (request, response, next) => {
       owner: id
     }).populate('owner', 'username')
       .populate('participants', 'username')
-    console.log('pelit', games)
     response.json(games)
   } catch (exception) {
     next(exception)

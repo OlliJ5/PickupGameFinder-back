@@ -48,4 +48,17 @@ playersRouter.post('/', async (request, response, next) => {
   }
 })
 
+playersRouter.get('/user/:id', async (request, response, next) => {
+  const id = request.params.id
+  try {
+    const userGames = await Player.find({
+      user: id
+    }).populate('game')
+    console.log('pelit', userGames)
+    response.json(userGames)
+  } catch (exception) {
+    next(exception)
+  }
+})
+
 module.exports = playersRouter
