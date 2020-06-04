@@ -53,8 +53,13 @@ playersRouter.get('/user/:id', async (request, response, next) => {
   try {
     const userGames = await Player.find({
       user: id
-    }).populate('game')
-    console.log('pelit', userGames)
+    }).populate({
+      path: 'game',
+      populate: {
+        path: 'owner',
+        select: 'username'
+      }
+    })
     response.json(userGames)
   } catch (exception) {
     next(exception)
